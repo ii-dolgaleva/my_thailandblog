@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="blog-entry">
+        <h2>{{ object.title }}</h2>
+        <p>{{ object.description }}</p>
+        <p></p>
+        <p>Дата создания блога: {{ object.pub_date }}</p>
+        <p>Автор блога: {{ object.author }}</p>
+    </div>
+
+    {% if user.is_authenticated and user.id == object.author.id %}
+        <p><a href="{% url 'blog_edit' blog.pk %}">+ Редактировать блог </a></p>
+        <p><a href="{% url 'blog_delete' blog.pk %}">+ Удалить блог</a></p>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'post_new' %}">+ Добавить пост</a></p>
+    {% endif %}
+    {% for post in object_list %}
+        {% if post.blog == object %}
+            <div class="post-entry">
+                <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+                <p>{{ post.body }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock content %}

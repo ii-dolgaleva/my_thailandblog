@@ -2,26 +2,30 @@
 
 <html>
     <head>
-        <title>Django blog</title>
+        <title>Блог о Тайланде</title>
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:􏰄􏰃􏰃" rel="stylesheet">
         <link href="{% static 'css/base.css' %}" rel="stylesheet">
     </head>
     <body>
         <header>
             <div class="nav-left">
-                <h1><a href="{% url 'home' %}">Django blog</a></h1>
+<!--                <p>Hello, world!</p>-->
+                <h1><a href="{% url 'home' %}">Блог о Тайланде</a></h1>
+                <h1><a href="{% url 'home' %}">Все, что вы хотели знать о Тайланде, но боялись спросить</a></h1>
             </div>
-            <div class="nav-right">
-                <a href="{% url 'post_new' %}">+ New Blog Post</a>
-            </div>
+            {% if user.is_authenticated %}
+                <div class="nav-right">
+                    <p><a href="{% url 'blog_new' %}">+ Добавить блог</a></p>
+                </div>
+            {% endif %}
         </header>
         {% if user.is_authenticated %}
-            <p>Hi, {{ user.username }}!</p>
-            <p><a href="{% url 'logout' %}">Log out</a></p>
+            <p>Добро пожаловать, {{ user.username }}!</p>
+            <p><a href="{% url 'logout' %}">Выйти</a></p>
         {% else %}
-            <p>You are not logged in. Please, log in or sign up.</p>
-            <a href="{% url 'login' %}">Log In</a>
-            <p><a href="{% url 'signup' %}">Sign Up</a></p>
+            <p>Вы не авторизованы. Пожалуйста, авторизуйтесь или зарегистрируйтесь.</p>
+            <a href="{% url 'login' %}">Войти</a>
+            <p><a href="{% url 'signup' %}">Зарегистрироваться</a></p>
         {% endif %}
         <div>
             {% block content %}
