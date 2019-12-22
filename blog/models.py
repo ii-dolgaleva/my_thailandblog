@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 
 
@@ -12,6 +11,9 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+    # def __str__(self):
+    #     return '(id: ' + str(self.id) + ') ' + self.title
 
     def get_absolute_url(self):
         return reverse('blog_detail', args=[str(self.id)])
@@ -32,6 +34,8 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    # def __str__(self):
+    #     return '(id: ' + str(self.id) + ') ' + self.title
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])

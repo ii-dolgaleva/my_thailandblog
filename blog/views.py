@@ -1,7 +1,9 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
+from django.shortcuts import get_object_or_404
 from .models import Post, Blog, Comment
+
 
 
 class BlogListView(ListView):
@@ -12,6 +14,7 @@ class BlogCreateView(CreateView):
     model = Blog
     template_name = 'blog_new.html'
     fields = ['title', 'description']
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -53,10 +56,13 @@ class PostDetailView(DetailView):
 class PostCreateView(CreateView):
     model = Post
     template_name = 'post_new.html'
-    fields = ['title', 'body', 'blog']
+    fields = ['title', 'body']
+    # success_url = reverse('blog_detail', args=[str(self.id)])
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        print('!!!',self.kwargs.get('blog_pk'))
+        form.instance.blog = get_object_or_404(Blog, id=self.kwargs.get('blog_pk'))
         return super().form_valid(form)
 
 
@@ -68,7 +74,7 @@ class PostUpdateView(UpdateView):
 class PostDeleteView(DeleteView):
     model = Post
     template_name = 'post_delete.html'
-    # success_url = reverse('post_detail', args=[str(self.id)])
+    # success_url = reverse('blog_detail')
 
 # .................................................
 
@@ -97,4 +103,3 @@ class CommentDeleteView(DeleteView):
     template_name = 'comment_delete.html'
     # прописать
     success_url = reverse_lazy('home')
-

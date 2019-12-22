@@ -1,4 +1,5 @@
 from django.urls import path, re_path
+from django.conf.urls import url
 from .views import *
 
 urlpatterns = [
@@ -10,7 +11,6 @@ urlpatterns = [
 
     path('posts/', PostListView.as_view(), name='post_list'),
     path('post/new/', PostCreateView.as_view(), name='post_new'),
-    # re_path(r'^blog/<int:pk>/post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('post/<int:pk>/edit/', PostUpdateView.as_view(), name='post_edit'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
