@@ -16,6 +16,7 @@
     {% if user.is_authenticated %}
         <p><a href="{% url 'post_new' %}">+ Добавить пост</a></p>
     {% endif %}
+
     {% for post in object_list %}
         {% if post.blog == object %}
             <div class="post-entry">

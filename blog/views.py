@@ -97,3 +97,4 @@ class CommentDeleteView(DeleteView):
     template_name = 'comment_delete.html'
     # прописать
     success_url = reverse_lazy('home')
+
