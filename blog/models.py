@@ -12,9 +12,6 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
 
-    # def __str__(self):
-    #     return '(id: ' + str(self.id) + ') ' + self.title
-
     def get_absolute_url(self):
         return reverse('blog_detail', args=[str(self.id)])
 
@@ -34,21 +31,19 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-    # def __str__(self):
-    #     return '(id: ' + str(self.id) + ') ' + self.title
 
     def get_absolute_url(self):
-        return reverse('post_detail', args=[str(self.id)])
+        return reverse('post_detail', args=[str(self.blog.id), str(self.id)])
 
     class Meta:
         verbose_name = u"Пост"
         verbose_name_plural = u"Посты"
 
-# верные ли ключи для моделей?
+
 class Comment(models.Model):
-    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE)
-    # author = models.CharField(max_length=200, verbose_name=u"Автор")
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name=u"Автор комментария")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    # blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     text = models.TextField(verbose_name=u"Текст")
     create_date = models.DateTimeField(default=timezone.now, verbose_name=u"Дата создания")
 
@@ -56,7 +51,7 @@ class Comment(models.Model):
         return self.text
 
     def get_absolute_url(self):
-        return reverse('comment_detail', args=[str(self.id)])
+        return reverse('comment_detail', args=[str(self.post.blog.id), str(self.post.id), str(self.id)])
 
     class Meta:
         verbose_name = u"Комментарий"

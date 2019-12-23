@@ -11,9 +11,22 @@
         <p>Автор блога: {{ object.author }}</p>
     </div>
 
+
     {% if user.is_authenticated and user.id == object.author.id %}
-        <p><a href="{% url 'post_edit' post.pk %}">+ Редактировать пост</a></p>
-        <p><a href="{% url 'post_delete' post.pk %}">+ Удалить пост</a></p>
+
+        <p><a href="{% url 'post_edit' post.blog.pk post.pk %}">+ Редактировать пост</a></p>
+        <p><a href="{% url 'post_delete' post.blog.pk post.pk %}">+ Удалить пост</a></p>
     {% endif %}
+
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'comment_new' post.blog.pk post.pk %}">+ Добавить комментарий</a></p>
+    {% endif %}
+
+    {% for comment in comment_list %}
+        <div class="post-entry">
+            <h2><a>{{ comment.author }}</a></h2>
+            <p>{{ comment.text }}</p>
+        </div>
+    {% endfor %}
 
 {% endblock content %}
