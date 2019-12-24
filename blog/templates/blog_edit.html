@@ -1,9 +1,57 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Редактирование блога</h1>
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Обновить" />
-    </form>
+
+<div class="container my-3">
+
+	<ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link btn btn-outline-secondary mb-3" href="{% url 'home' %}">< На главную</a>
+      </li>
+    </ul>
+
+	<div class="card">
+        <!-- card header start -->
+
+          <div class="card-header">
+            <ul class="nav nav-pills card-header-pills">
+
+             <!--  <li class="nav-item">
+                <a class="nav-link" href="{% url 'blog_detail' blog.pk %}">Публикации</a>
+              </li> -->
+
+              {% if user.is_authenticated and user.id == object.author.id %}
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'blog_edit' blog.pk %}">Редактировать блог</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="color: red" href="{% url 'blog_delete' blog.pk %}" tabindex="-1" aria-disabled="true">Удалить блог</a>
+              </li>
+              {% endif %}
+
+              <li class="nav-item my-auto ml-auto mr-4">
+                 <span>Дата создания: {{ object.pub_date }}</span>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <!-- card header end -->
+
+          <!-- card body starts -->
+          <div class="card-body">
+
+            <h4>Изменить блог:</h4>
+		    <form action="" method="post">{% csrf_token %}
+		        {{ form.as_p }}
+		        <input class="btn btn-primary" type="submit" value="Обновить" />
+		        <a href="{% url 'blog_detail' blog.pk %}" class="btn btn-outline-secondary">Отмена</a>
+		    </form>
+
+          </div>
+          <!-- card body end -->
+    </div>
+</div>
+<!-- blog title end -->
 {% endblock content %}

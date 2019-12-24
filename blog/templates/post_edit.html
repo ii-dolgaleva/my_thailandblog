@@ -1,10 +1,70 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Редактирование поста</h1>
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Обновить" />
-<!--        <a href="{{ view.get_success_url }}">Cancel</a>-->
-    </form>
+
+<div class="container my-3">
+		<ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link btn btn-outline-secondary mb-3" href="{% url 'home' %}">< На главную</a>
+          </li>
+        </ul>
+
+        <div class="card">
+            <!-- description card header start -->
+
+              <div class="card-header">
+                <h3 class="float-left my-auto" >{{object.blog}} / {{ object.title }}</h3>
+                <h6 class="float-right my-auto text-muted">Автор поста: {{ object.author}}</h6>
+              </div>
+
+              <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+
+                  {% if user.is_authenticated and user.id == object.author.id %}
+                      <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'post_edit' post.blog.pk post.pk %}">Редактировать пост</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: red" href="{% url 'post_delete' post.blog.pk post.pk %}" tabindex="-1" aria-disabled="true">Удалить пост</a>
+                      </li>
+                  {% endif %}
+
+                  <li class="nav-item my-auto ml-auto mr-4">
+                     <span class="text-muted">Дата создания: {{ object.create_date }}</span>
+                  </li>
+
+                </ul>
+
+              </div>
+
+              <!-- description card header end -->
+
+              <!-- edit block start -->
+              <div class="card-body">
+
+
+			    <form action="" method="post">{% csrf_token %}
+
+			    	<div class="form-group">
+
+			        	{{ form.as_p }}
+
+			        	<input class="btn btn-outline-primary" type="submit" value="Обновить" />
+			        	<a href="{% url 'post_detail' post.blog.pk post.pk %}" class="btn btn-outline-secondary">Отмена</a>
+			        </div>
+			    </form>
+
+
+              </div>
+            <!-- edit block end -->
+
+            <div class="card-footer text-center">
+                <span class="text-muted"> Дата последнего изменения: {{ object.update_date }}</span>
+            </div>
+        </div>
+
+</div>
+
+
+
 {% endblock content %}

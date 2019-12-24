@@ -29,8 +29,8 @@ def signup(request):
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            return HttpResponse('Пожалуйста, подтвердите свою электронную почту для того, чтобы завершить регистрацию.')
-            # return render (request,'confirm_email.html')
+            # return HttpResponse('Пожалуйста, подтвердите свою электронную почту для того, чтобы завершить регистрацию.')
+            return render (request,'confirm_email.html')
     else:
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})

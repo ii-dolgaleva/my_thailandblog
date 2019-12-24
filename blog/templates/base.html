@@ -2,33 +2,54 @@
 
 <html>
     <head>
+
         <title>Блог о Тайланде</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:􏰄􏰃􏰃" rel="stylesheet">
         <link href="{% static 'css/base.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
     </head>
+
     <body>
-        <header>
-            <div class="nav-left">
-                <h1><a href="{% url 'home' %}">Блог о Тайланде</a></h1>
-                <h1><a href="{% url 'home' %}">Все, что вы хотели знать о Тайланде, но боялись спросить</a></h1>
-            </div>
-            {% if user.is_authenticated %}
-                <div class="nav-right">
-                    <p><a href="{% url 'blog_new' %}">+ Добавить блог</a></p>
+
+
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f8f9fa;border-bottom: 1px solid lightgray;" >
+
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <img src="{% static 'img/waves_icon.png' %}" width="auto" height="30" alt="">
+                    <span class="ml-1">EverythingThai</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbar">
+                  <div class="navbar-nav mx-auto">
+                    <span class="navbar-text" style="font-weight: 200">Все, что вы хотели знать о Тайланде, но боялись спросить</span>
+                  </div>
+
+                  <div class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <span class="navbar-text mr-4">
+                            Вы вошли как: <b>{{ user.username }}</b>
+                        </span>
+                        <a class="nav-link" href="{% url 'logout' %}"><u>Выйти</u></a>
+                    {% endif %}
+
+                    </div>
                 </div>
-            {% endif %}
-        </header>
-        {% if user.is_authenticated %}
-            <p>Добро пожаловать, {{ user.username }}!</p>
-            <p><a href="{% url 'logout' %}">Выйти</a></p>
-        {% else %}
-            <p>Вы не авторизованы. Пожалуйста, авторизуйтесь или зарегистрируйтесь.</p>
-            <a href="{% url 'login' %}">Войти</a>
-            <p><a href="{% url 'signup' %}">Зарегистрироваться</a></p>
-        {% endif %}
+            </nav>
+
         <div>
+
             {% block content %}
             {% endblock content %}
         </div>
+
+        <script src="{% static 'js/jquery-3.4.1.min.js' %}"> </script>
+        <script src="{% static 'js/bootstrap.min.js' %}"> </script>
     </body>
 </html>

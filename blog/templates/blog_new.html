@@ -1,9 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Новый блог</h1>
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Сохранить" />
-    </form>
+
+<div class="container my-3">
+
+	<div class="card">
+
+          <div class="card-header">
+          	<h2 class="my-auto">Новый блог</h2>
+          </div>
+
+          <div class="card-body">
+
+		    <form action="" method="post">{% csrf_token %}
+		        {{ form.as_p }}
+		        <input class="btn btn-outline-primary" type="submit" value="Сохранить"/>
+		        <a href="{% url 'home' %}" class="btn btn-outline-secondary">Отмена</a>
+		    </form>
+
+          </div>
+
+    </div>
+</div>
+
+
 {% endblock content %}

@@ -1,9 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Зарегистрироваться</h2>
-    <form method="post"> {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Подтвердить</button>
-    </form>
+
+<div class="container">
+
+    <div class="card mt-5">
+      <div class="card-header">
+        <h3 class="my-auto">Зарегистрироваться</h3>
+      </div>
+      <div class="card-body">
+
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary mt-3" type="submit">Подтвердить</button>
+            </form>
+      </div>
+    </div>
+
+</div>
+
+
 {% endblock content %}
