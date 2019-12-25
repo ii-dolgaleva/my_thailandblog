@@ -2,17 +2,15 @@
 
 {% block content %}
 
-
 <div class="container my-3">
 
 	<div class="card">
 
           <div class="card-header">
-          	<h2 class="my-auto">Новый пост</h2>
+          	<h2 class="my-auto">Создание поста</h2>
           </div>
 
           <div class="card-body">
-
 		    <form action="" method="post">{% csrf_token %}
 		        {{ form.as_p }}
 		        <input class="btn btn-outline-primary" type="submit" value="Сохранить"/>

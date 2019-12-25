@@ -54,32 +54,42 @@
         </div>
 
         <!-- Comments card begin -->
-        <div class="card mt-3">
+        <div class="card mt-4">
             <div class="card-header">
                 <h5 class=" float-left" style="margin-bottom: 0">
                    Комментарии:
                 </h5>
                 {% if user.is_authenticated %}
-                    <a href="#" class="btn btn-outline-primary float-right">Добавить комментарий</a>
+                    <a href="{% url 'comment_new' post.blog.pk post.pk %}" class="btn btn-outline-primary float-right">
+                        Добавить комментарий</a>
                 {% endif %}
             </div>
+
             <div class="card-body">
 
                     <!-- Comments list begin   -->
-                        <div class="card">
+                {% for comment in comment_list %}
+                        <div class="card mb-3">
 
                           <div class="card-header text-muted">
-                            <span class="float-left">Автор: Ира</span>
-                            <span class="float-right">Дата: 23.12.2019</span>
+                            <span class="float-left mr-1">Автор: {{ comment.author }} |</span>
+                            <span class="float-left">Дата создания: {{ comment.create_date }}</span>
+                              {% if user.is_authenticated and user.id == comment.author.id %}
+                                  <a href="{% url 'comment_delete' blog.pk post.pk comment.pk %}" class="btn btn-outline-secondary btn-sm float-right">
+                                    Удалить</a>
+                                  <a href="{% url 'comment_edit' blog.pk post.pk comment.pk %}" class="btn btn-outline-secondary btn-sm mr-2 float-right">
+                                    Редактировать</a>
+                              {% endif %}
                           </div>
 
                           <div class="card-body">
-                            <p class="card-text">Да это же просто отличный блог! Побольше бы таких блогов!</p>
+                            <p class="card-text">{{ comment.text }}</p>
 
-                          </div>
 
+                           </div>
 
                         </div>
+                {% endfor %}
 
                     <!-- Comments list end -->
             </div>
